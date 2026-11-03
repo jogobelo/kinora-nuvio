@@ -1,13 +1,13 @@
 {
   "name": "Kinora FastShare",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Testovaci lokalny FastShare provider pre Nuvio.",
   "scrapers": [
     {
       "id": "kinora-fastshare",
       "name": "Kinora FastShare",
-      "description": "FastShare cez vlastny ucet. Testovacia verzia.",
-      "version": "0.1.0",
+      "description": "FastShare cez vlastny ucet. Spolocne preferencie CZ + SK a ENG + original.",
+      "version": "0.1.1",
       "filename": "fastshare.js",
       "supportedTypes": [
         "movie",
