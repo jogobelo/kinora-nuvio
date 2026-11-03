@@ -1,0 +1,35 @@
+{
+  "name": "Kinora FastShare",
+  "version": "0.1.0",
+  "description": "Testovaci lokalny FastShare provider pre Nuvio.",
+  "scrapers": [
+    {
+      "id": "kinora-fastshare",
+      "name": "Kinora FastShare",
+      "description": "FastShare cez vlastny ucet. Testovacia verzia.",
+      "version": "0.1.0",
+      "filename": "fastshare.js",
+      "supportedTypes": [
+        "movie",
+        "tv"
+      ],
+      "enabled": true,
+      "hasSettings": true,
+      "contentLanguage": [
+        "sk",
+        "cs",
+        "en"
+      ],
+      "formats": [
+        "mkv",
+        "mp4",
+        "avi",
+        "m4v",
+        "mov",
+        "webm",
+        "ts",
+        "m2ts"
+      ]
+    }
+  ]
+}
