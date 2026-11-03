@@ -1,13 +1,13 @@
 {
   "name": "Kinora FastShare",
-  "version": "0.1.3",
-  "description": "Kinora FastShare — povodny poskytovatel bez testovacich TV adapterov.",
+  "version": "0.1.4",
+  "description": "Kinora FastShare — oprava runtime bez JavaScript casovacov.",
   "scrapers": [
     {
       "id": "kinora-fastshare",
       "name": "Kinora FastShare",
       "description": "FastShare cez vlastny ucet. Spolocne preferencie CZ + SK a ENG + original.",
-      "version": "0.1.1",
+      "version": "0.1.4",
       "filename": "fastshare.js",
       "supportedTypes": [
         "movie",

@@ -1,4 +1,4 @@
-/* Kinora FastShare 0.1.1 — local Nuvio provider, no backend. */
+/* Kinora FastShare 0.1.4 — local Nuvio provider, no backend. */
 'use strict';
 
 var API = 'https://fastshare.cz/api/api_kodi.php';
@@ -10,16 +10,19 @@ function settings() {
 function requestJson(url, options, label) {
   // Never propagate native errors: they may contain login URLs or API keys.
   return new Promise(function (resolve, reject) {
-    var timer = setTimeout(function () { reject(new Error(label + ': timeout')); }, 12000);
+    // Some Nuvio TV runtimes do not expose JavaScript timers.
+    // In that case the host's plugin timeout still bounds execution.
+    var hasTimers = typeof setTimeout === 'function' && typeof clearTimeout === 'function';
+    var timer = hasTimers ? setTimeout(function () { reject(new Error(label + ': timeout')); }, 12000) : null;
     Promise.resolve().then(function () { return fetch(url, options || {}); }).then(function (r) {
       if (!r.ok) throw new Error('HTTP');
       return r.json();
     }).then(function (data) {
-      clearTimeout(timer);
+      if (hasTimers) clearTimeout(timer);
       if (!data || typeof data !== 'object') reject(new Error(label + ': neplatna odpoved'));
       else resolve(data);
     }, function () {
-      clearTimeout(timer);
+      if (hasTimers) clearTimeout(timer);
       reject(new Error(label + ': spojenie zlyhalo'));
     });
   });
@@ -218,7 +221,7 @@ function getStreams(tmdbId, mediaType, season, episode) {
 
 function onSettings() {
   return [
-    {type: 'header', label: 'Kinora FastShare — testovacia verzia 0.1.1'},
+    {type: 'header', label: 'Kinora FastShare — testovacia verzia 0.1.4'},
     {type: 'info', label: 'Plugin bezi priamo v Nuvio. Jazyk odhaduje z nazvu suboru. Prihlasovacie udaje neposielaj do chatu ani do repozitara.'},
     {type: 'text', key: 'username', label: 'FastShare prihlasovacie meno'},
     {type: 'text', key: 'password', label: 'FastShare heslo', isPassword: true},
