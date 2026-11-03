@@ -1,7 +1,7 @@
 {
   "name": "Kinora FastShare",
-  "version": "0.1.1",
-  "description": "Testovaci lokalny FastShare provider pre Nuvio.",
+  "version": "0.1.2",
+  "description": "Kinora FastShare a testovacie TV adaptery HellSpy/SkTonline.",
   "scrapers": [
     {
       "id": "kinora-fastshare",
@@ -29,6 +29,54 @@
         "webm",
         "ts",
         "m2ts"
+      ]
+    },
+    {
+      "id": "hellspy-tv-compat",
+      "name": "HellSpy | TV kompatibilita",
+      "description": "Testovaci adapter pre typy series/tv. Povodny poskytovatel scrapelord/plugin.",
+      "version": "0.1.0",
+      "filename": "hellspy-tv.js",
+      "supportedTypes": [
+        "movie",
+        "tv",
+        "series"
+      ],
+      "enabled": true,
+      "hasSettings": false,
+      "contentLanguage": [
+        "cs",
+        "sk"
+      ],
+      "formats": [
+        "mp4",
+        "mkv",
+        "avi",
+        "m3u8"
+      ]
+    },
+    {
+      "id": "sktonline-tv-compat",
+      "name": "SkTonline | TV kompatibilita",
+      "description": "Testovaci adapter pre typy series/tv. Povodny poskytovatel scrapelord/plugin.",
+      "version": "0.1.0",
+      "filename": "sktonline-tv.js",
+      "supportedTypes": [
+        "movie",
+        "tv",
+        "series"
+      ],
+      "enabled": true,
+      "hasSettings": false,
+      "contentLanguage": [
+        "cs",
+        "sk"
+      ],
+      "formats": [
+        "mp4",
+        "mkv",
+        "avi",
+        "m3u8"
       ]
     }
   ]
