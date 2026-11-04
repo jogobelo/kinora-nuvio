@@ -51,7 +51,7 @@ export async function handleAddon(request, env, fetcher, h) {
       return h.json({fastshareStatus:r.status,ready:r.ok});
     } catch {return h.json({fastshareStatus:null,ready:false},502);}
   }
-  if (request.method === 'OPTIONS') return h.reply('', 'text/plain',204);
+  if (request.method === 'OPTIONS') return new Response(null,{status:204,headers:{'Access-Control-Allow-Origin':'*','Access-Control-Allow-Methods':'GET, HEAD, OPTIONS','Access-Control-Allow-Headers':'Content-Type','Cache-Control':'no-store'}});
   if (url.pathname === '/manifest.json' && ['GET','HEAD'].includes(request.method)) return h.json(addonManifest(false),200,request.method==='HEAD');
   const match = url.pathname.match(/^\/a\/([A-Za-z0-9_-]+)\/(manifest\.json|configure|stream\/(movie|series)\/([^/]+)\.json)$/);
   if (url.pathname !== '/api/install' && !match) return null;
