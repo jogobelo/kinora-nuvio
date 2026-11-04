@@ -53,3 +53,11 @@ test('foreign form origin is rejected before login',async()=>{
  const r=await worker.fetch(new Request(origin+'/api/install',{method:'POST',headers:{Origin:'https://foreign.example','Content-Type':'application/json'},body:'{}'}),env);
  assert.equal(r.status,403);assert.equal(records.size,0);
 });
+test('CORS preflight is bodyless and manifests support HEAD',async()=>{
+ const {worker,env}=setup();
+ const r=await worker.fetch(new Request(origin+'/manifest.json',{method:'OPTIONS'}),env);
+ assert.equal(r.status,204);assert.equal(await r.text(),'');
+ assert.equal(r.headers.get('Access-Control-Allow-Origin'),'*');
+ const head=await worker.fetch(new Request(origin+'/manifest.json',{method:'HEAD'}),env);
+ assert.equal(head.status,200);assert.equal(await head.text(),'');
+});
