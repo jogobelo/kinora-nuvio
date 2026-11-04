@@ -1,19 +1,29 @@
 <!doctype html>
-<html lang="sk"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Kinora FastShare — prihlásenie</title>
+<html lang="sk"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kinora — prepojenie Nuvio mobilu a TV</title>
 <style>
-:root{color-scheme:dark;font-family:system-ui,sans-serif;background:#101116;color:#f3f4fa}body{max-width:560px;margin:40px auto;padding:0 20px}h1{margin-bottom:8px}p{line-height:1.55;color:#bdc4d3}form,section{background:#1b1e27;border-radius:20px;padding:24px;margin:24px 0}label{display:block;margin:18px 0 8px}input,select,button,textarea{box-sizing:border-box;width:100%;font:inherit;border-radius:10px;padding:13px;background:#101116;color:inherit;border:1px solid #454d62}button{background:#6550de;border:0;margin-top:20px;cursor:pointer;font-weight:650}button:disabled{opacity:.6}textarea{height:140px;overflow-wrap:anywhere}small{display:block;color:#bdc4d3;line-height:1.5;margin-top:8px}#status{white-space:pre-wrap}a{color:#bdb3ff}[hidden]{display:none}
-</style>
-<h1>Kinora · FastShare</h1><p>Prihlás sa a vytvor si súkromnú URL doplnku pre Nuvio v TV aj mobile.</p>
-<section><h2>Nastaviť účet v mobilnom Nuvio</h2><p>Vytvor si spárovaný repozitár. Meno a heslo potom vyplníš priamo v mobilnom Nuvio. Zapni odosielanie relácie do TV a otvor zdroje filmu. Rovnakú súkromnú URL pridaj do Nuvio TV. Cloudflare dostane iba reláciu a preferencie, heslo zostane v mobilnom Nuvio.</p><button id="pair" type="button">Vytvoriť repozitár pre mobil a TV</button><small>Vyžaduje úložisko SESSIONS. Relácia platí najviac 30 dní; otvorenie zdrojov v prihlásenom mobile ju obnoví. Párovacia URL platí rok a je tajná.</small></section>
-<form id="login">
-<label for="username">Prihlasovacie meno FastShare</label><input id="username" name="username" autocomplete="username" required maxlength="256">
-<label for="password">Heslo FastShare</label><input id="password" name="password" type="password" autocomplete="current-password" required maxlength="1024">
-<label for="language">Preferované jazyky</label><select id="language" name="language"><option value="CZ_SK">CZ + SK, potom ENG + originál</option><option value="EN_ORIGINAL">ENG + originál, potom CZ + SK</option></select>
-<label for="sort">Veľkosť súborov v jazykovej skupine</label><select id="sort" name="sort"><option value="largest">Od najväčšieho</option><option value="smallest">Od najmenšieho</option></select>
-<label for="tmdb">TMDB kľúč alebo Read Access Token (voliteľné)</label><input id="tmdb" name="tmdb" type="password" autocomplete="off" maxlength="4096"><small>Prázdne pole použije kľúč prevádzkovateľa alebo kľúč Nuvio. Ak aplikácia neposkytuje funkčný kľúč, vlož vlastný. Titulky a zvukovú stopu vyberáš v prehrávači Nuvio.</small>
-<button id="submit">Prihlásiť a vytvoriť URL</button>
-<small>Heslo odošleme cez toto hosťovanie do FastShare na overenie. Aplikácia ho neukladá. Uložená bude iba šifrovaná relácia v súkromnej URL s platnosťou 30 dní. Súkromnú URL nezverejňuj ani nevkladaj na GitHub.</small>
-</form><p id="status" role="status" aria-live="polite"></p>
-<section id="result" hidden><h2 id="resultTitle">Prihlásenie overené</h2><label for="manifest">Súkromná URL repozitára</label><textarea id="manifest" readonly></textarea><button id="copy" type="button">Kopírovať URL</button><p id="expiry"></p><p id="installInstructions">V Nuvio TV otvor Pluginy → Spravovať cez telefón. Vlož túto URL, stlač Pridať a Uložiť zmeny.</p><p>Po úspešnej skúške vypni starú Kinoru. Súkromnú URL nezverejňuj.</p><small>Videá idú priamo z FastShare do zariadenia. Prehrávanie na TV treba overiť.</small></section>
-<script src="/app.js" defer></script></html>
+:root{color-scheme:dark;font-family:system-ui,sans-serif;background:#101116;color:#f3f4fa}body{max-width:600px;margin:36px auto;padding:0 20px}h1{margin-bottom:8px}h2{font-size:1.3rem}p,li{line-height:1.6;color:#bdc4d3}li{margin:10px 0}section{background:#1b1e27;border-radius:20px;padding:24px;margin:24px 0}label{display:block;margin:18px 0 8px}button,textarea{box-sizing:border-box;width:100%;font:inherit;border-radius:10px;padding:14px;color:inherit;border:1px solid #454d62}button{background:#6550de;border:0;cursor:pointer;font-weight:650}button:disabled{opacity:.6}textarea{height:160px;background:#101116;overflow-wrap:anywhere}small{display:block;color:#bdc4d3;line-height:1.5;margin-top:12px}#status{white-space:pre-wrap}[hidden]{display:none}
+</style></head><body>
+<h1>Kinora · FastShare</h1>
+<p>Prihlásenie zadáš priamo v mobilnom Nuvio. Táto stránka iba vytvorí súkromnú adresu, ktorá prepojí mobil a TV.</p>
+<section><h2>1. Vytvor prepojenie</h2>
+<button id="pair" type="button">Vytvoriť repozitár pre mobil a TV</button>
+<small>Na tejto stránke nezadávaš meno ani heslo FastShare.</small></section>
+<p id="status" role="status" aria-live="polite"></p>
+<section id="result" hidden>
+<h2>Repozitár vytvorený — účet nastavíš v mobile</h2>
+<label for="manifest">Súkromná URL repozitára</label>
+<textarea id="manifest" readonly></textarea>
+<button id="copy" type="button">Kopírovať URL</button><p id="expiry"></p>
+<small>Táto URL je tajná. Neposielaj ju do chatu ani ju nezverejňuj na GitHube.</small></section>
+<section><h2>2. Nastav účet v mobilnom Nuvio Full</h2><ol>
+<li>Vytvorenú URL pridaj do <strong>Pluginov</strong> v mobilnom Nuvio Full.</li>
+<li>Otvor nastavenia poskytovateľa <strong>Kinora FastShare — mobil a TV</strong>.</li>
+<li>Vyplň účet FastShare, vyber jazyk a zapni <strong>Odosielať reláciu a preferencie do spárovaného TV</strong>. Ulož nastavenia.</li>
+<li>V mobile otvor <strong>zoznam zdrojov filmu</strong>. Tým sa vykoná prihlásenie a prenos relácie.</li>
+</ol><small>Meno a heslo ostávajú v Nuvio; mobil ich posiela priamo FastShare. Do Cloudflare po zapnutí odosielania prenesie iba reláciu, preferencie a prípadný osobný TMDB kľúč.</small></section>
+<section><h2>3. Pridaj rovnakú URL do TV</h2>
+<p>V Nuvio TV otvor <strong>Pluginy → Spravovať cez telefón</strong>, vlož tú istú URL a ulož zmeny. Potom otvor rovnaký film ako na mobile.</p>
+<small>Prenos môže trvať minútu alebo dlhšie. Relácia platí najviac 30 dní a mobil ju pri používaní obnovuje. Párovacia URL platí rok. Reálne prehrávanie treba overiť na zariadení.</small></section>
+<script src="/app.js" defer></script></body></html>
