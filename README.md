@@ -1,24 +1,19 @@
-# Kinora pre Nuvio
+# Kinora pre Nuvio a Stremio
 
-FastShare poskytovateľ pre mobilné Nuvio Full a Nuvio TV.
+## HTTP doplnok 0.4.0 pre TV
 
-## Prihlásenie v mobile a párovanie s TV (0.3.0)
+Konfigurácia: https://kinora-fastshare.jogobelo.workers.dev/configure
 
-Server a návod na automatické nasadenie z GitHubu sú v priečinku [cloudflare](cloudflare/README.md).
+Verejný manifest: https://kinora-fastshare.jogobelo.workers.dev/manifest.json
 
-1. Pripoj existujúci Cloudflare Worker `kinora-fastshare` k tomuto repozitáru: vetva `main`, root directory `cloudflare`, build `npm test`, deploy `npx wrangler@4 deploy`.
-2. Po úspešnom nasadení skontroluj `/health`: verzia `0.3.0`, `ready: true`, `pairingReady: true`.
-3. Na stránke Kinora vytvor súkromný repozitár pre mobil a TV. Rovnakú URL pridaj do Pluginov oboch zariadení.
-4. V nastaveniach poskytovateľa v mobilnom Nuvio vyplň účet, zapni odosielanie relácie a otvor zdroje filmu. TV prevezme reláciu a preferencie.
+Zadaj účet na konfiguračnej stránke. Po úspešnom overení pridaj vytvorený súkromný manifest do **Doplnkov** v Nuvio alebo Stremio. Mobil nie je potrebný; nové HTTP odkazy nemajú ročný limit. Účet a heslo sú šifrované vo vlastnom Cloudflare KV, aby sa doplnok prihlasoval automaticky.
 
-Podrobný [návod pre Nuvio](cloudflare/NAVOD_NUVIO.md) obsahuje nastavenie účtu, jazyka, úložiska a diagnostiku.
+**Známy blokujúci problém:** FastShare odmieta požiadavky z Cloudflare HTTP 403, potvrdené aj verejným vyhľadávaním bez účtu. Samotné nové rozhranie tento problém nerieši. Reálne prihlásenie a prehrávanie zatiaľ nie sú potvrdené.
 
-Meno ani heslo FastShare sa neposielajú do Workeru pri párovaní cez mobil. Súkromné inštalačné URL, účty a tajné kľúče nezverejňuj v tomto repozitári. `KINORA_SECRET` patrí iba do Cloudflare Secrets.
+[Presný postup a obmedzenia](cloudflare/NAVOD_NUVIO.md) · [Nasadenie](cloudflare/README.md)
 
-## Pôvodný mobilný variant
+## Pôvodné pluginy
 
-Súbory `manifest.json` a `fastshare.js` v koreni obsahujú pôvodný samostatný plugin 0.1.4. Nie sú inštalačnou URL nového párovania.
+Root `manifest.json` a `fastshare.js` sú pôvodný JS plugin 0.1.4 pre mobilné Nuvio Full. Staršie párovacie odkazy 0.3.0 ostávajú podporované; ich časové limity sa nemenia.
 
-## Overenie
-
-V priečinku `cloudflare` spustí `npm test` 12 integračných testov so simulovanými službami. Reálne prihlásenie a prehrávanie treba overiť na zariadeniach.
+Súkromné odkazy, prihlasovacie údaje a KINORA_SECRET nepatria do verejného GitHub repozitára.
