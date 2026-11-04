@@ -1,10 +1,11 @@
 import providerTemplate from './provider.js.txt';
 import page from './index.html.txt';
 import app from './app.js.txt';
+import {handleAddon} from './addon.js';
 
 const encoder = new TextEncoder();
 const API = 'https://fastshare.cz/api/api_kodi.php';
-const VERSION = '0.3.0';
+const VERSION = '0.4.0';
 const TTL = 30 * 86400;
 const hashPattern = /^[a-zA-Z0-9._~-]{8,512}$/;
 function fail(code) {
@@ -31,6 +32,9 @@ const safeErrors = {
 const security = {
   'Cache-Control': 'no-store, private',
   'Referrer-Policy': 'no-referrer',
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'Content-Type',
+  'Access-Control-Allow-Methods': 'GET, HEAD, OPTIONS',
   'X-Content-Type-Options': 'nosniff',
   'X-Frame-Options': 'DENY',
   'Content-Security-Policy': "default-src 'none'; script-src 'self'; style-src 'unsafe-inline'; connect-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'",
@@ -144,6 +148,8 @@ export function makeWorker(fetcher = fetch) {
     const url = new URL(request.url);
     const head = request.method === 'HEAD';
     try {
+      const addonResponse = await handleAddon(request, env, fetcher, {seal, key, unb64, kv, login, fail, json, reply, providerTemplate});
+      if (addonResponse) return addonResponse;
       if (url.pathname === '/pair/new' && request.method === 'POST') {
         if (request.headers.get('Origin') !== url.origin || !request.headers.get('Content-Type')?.startsWith('application/json')) return json({error: 'Neplatna poziadavka.'}, 403);
         kv(env); await key(env);
