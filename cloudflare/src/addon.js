@@ -50,7 +50,12 @@ export async function handleAddon(request, env, fetcher, h) {
     const checks = await Promise.all(hosts.map(async host => {
       try {
         const r = await fetcher('https://' + host + '/api/api_kodi.php?process=search&pagination=1&term=Matrix&adult=0',{redirect:'manual',signal:AbortSignal.timeout(12000),headers:{Accept:'application/json'}});
-        return {host,status:r.status,ready:r.ok};
+        const text = r.ok ? '' : (await r.text()).slice(0,16000);
+        const edgeCode = text.match(/(?:error(?: code)?[:\s]+|<span[^>]*>)(1\d{3})(?:<|\s)/i)?.[1] || null;
+        return {host,status:r.status,ready:r.ok,contentType:r.headers.get('Content-Type'),
+          challenge:r.headers.get('cf-mitigated')==='challenge',edgeCode,
+          cloudflarePage:/cloudflare/i.test(text),
+          title:(text.match(/<title[^>]*>([^<]{0,120})<\/title>/i)?.[1] || '').replace(/[\r\n]/g,' ')};
       } catch {return {host,status:null,ready:false};}
     }));
     return h.json({checks,ready:checks.some(check=>check.ready)});
