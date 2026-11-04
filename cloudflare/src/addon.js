@@ -46,10 +46,14 @@ async function addonMetadata(id, type, account, fetcher) {
 export async function handleAddon(request, env, fetcher, h) {
   const url = new URL(request.url);
   if (url.pathname === '/connectivity' && request.method === 'GET') {
-    try {
-      const r = await fetcher('https://fastshare.cz/api/api_kodi.php?process=search&pagination=1&term=Matrix&adult=0',{redirect:'manual',signal:AbortSignal.timeout(12000),headers:{Accept:'application/json'}});
-      return h.json({fastshareStatus:r.status,ready:r.ok});
-    } catch {return h.json({fastshareStatus:null,ready:false},502);}
+    const hosts = ['fastshare.cz','fastshare.cloud'];
+    const checks = await Promise.all(hosts.map(async host => {
+      try {
+        const r = await fetcher('https://' + host + '/api/api_kodi.php?process=search&pagination=1&term=Matrix&adult=0',{redirect:'manual',signal:AbortSignal.timeout(12000),headers:{Accept:'application/json'}});
+        return {host,status:r.status,ready:r.ok};
+      } catch {return {host,status:null,ready:false};}
+    }));
+    return h.json({checks,ready:checks.some(check=>check.ready)});
   }
   if (request.method === 'OPTIONS') return new Response(null,{status:204,headers:{'Access-Control-Allow-Origin':'*','Access-Control-Allow-Methods':'GET, HEAD, OPTIONS','Access-Control-Allow-Headers':'Content-Type','Cache-Control':'no-store'}});
   if (url.pathname === '/manifest.json' && ['GET','HEAD'].includes(request.method)) return h.json(addonManifest(false),200,request.method==='HEAD');
