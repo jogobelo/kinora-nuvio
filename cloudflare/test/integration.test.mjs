@@ -28,7 +28,7 @@ test('private login, repository download and film/series execution without timer
   assert.ok(!manifest.includes('synthetic-password'));
   const manifestResponse = await worker.fetch(new Request(manifest), env);
   const repo = await manifestResponse.json();
-  assert.equal(repo.scrapers[0].version, '0.3.0');
+  assert.equal(repo.scrapers[0].version, '0.4.0');
   assert.ok(repo.scrapers[0].supportedTypes.includes('series'));
   const scriptUrl = new URL(repo.scrapers[0].filename, manifest).toString();
   const code = await (await worker.fetch(new Request(scriptUrl), env)).text();
