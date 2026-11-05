@@ -2,7 +2,13 @@
 
 HTTP doplnok FastShare s nastavením účtu na webe. Súkromný manifest patrí do **Doplnkov** v Nuvio alebo Stremio. Mobil nie je potrebný; HTTP odkazy nemajú ročnú expiráciu.
 
-## Netlify Free — pripravené nasadenie
+## Netlify Free — verejné nasadenie
+
+**Konfigurácia účtu:** https://kinora-fastshare.netlify.app/configure
+
+Na TV otvor túto stránku v prehliadači, prihlás sa do FastShare a použi **Otvoriť v Nuvio / Stremio**. Ak sa aplikácia neotvorí, vlož vytvorenú osobnú URL do **Nuvio → Nastavenia → Obsah a objavovanie → Doplnky → URL doplnku → Inštalovať**. Osobná URL patrí do Doplnkov, nie do Pluginov. Nepoužívaj na nové nastavenie starú adresu Cloudflare.
+
+Nižšie je postup pre vytvorenie ďalšieho vlastného nasadenia; existujúci projekt Kinora už je nasadený.
 
 Vybraný nový hosting je Netlify Free. Repozitár obsahuje `netlify.toml`, funkciu pre Node.js a trvalé úložisko Netlify Blobs. Šifrovací kľúč sa vytvorí automaticky pri prvom použití a prežije aktualizácie.
 
@@ -13,7 +19,7 @@ Vybraný nový hosting je Netlify Free. Repozitár obsahuje `netlify.toml`, funk
 5. Po nasadení otvor `/health` (musí vrátiť `ready: true`) a `/connectivity` (FastShare musí odpovedať HTTP 200).
 6. Na hlavnej adrese projektu otvor `/configure`, vyplň účet FastShare a vytvor súkromný manifest. Ten pridaj do Doplnkov v Nuvio TV.
 
-**Nasadenie do účtu Netlify ešte nie je potvrdené.** Reálne prihlásenie a prehrávanie overíme až po nasadení. Bezplatný plán má mesačný limit; po jeho vyčerpaní môže službu pozastaviť do obnovenia limitu.
+**Overené:** verejná konfigurácia, manifest aj `/health` odpovedajú bez prihlásenia do Netlify HTTP 200; úložisko je pripravené a FastShare.cz z Netlify odpovedá HTTP 200. Reálne prihlásenie do používateľského účtu FastShare a prehrávanie na TV ešte nie sú overené. Bezplatný plán má mesačný limit; po jeho vyčerpaní môže službu pozastaviť do obnovenia limitu.
 
 Účet a heslo sa po úspešnom overení ukladajú šifrovane v súkromnom Netlify Blobs store `kinora-private-v1`. Inštalačný odkaz umožňuje používať účet, preto ho nezverejňuj. Zmazanie projektu alebo záznamov Blobs môže zneplatniť inštalácie. Ukážkové deploye nepoužívajú produkčné účty — konfiguráciu rob na hlavnej adrese projektu.
 
