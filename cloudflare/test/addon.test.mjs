@@ -24,6 +24,8 @@ function setup(status=200){
 test('HTTP addon config, stable encrypted account, film/episode streams and request headers',async()=>{
  const {worker,env,install,records}=setup();
  const publicManifest=await (await worker.fetch(new Request(origin+'/manifest.json'),env)).json();
+ assert.equal(publicManifest.name,'Kinora');
+ assert.equal(publicManifest.version,'0.4.1');
  assert.equal(publicManifest.behaviorHints.configurationRequired,true);
  const response=await install(); assert.equal(response.status,200);
  const {manifest,expires}=await response.json(); assert.equal(expires,undefined);
