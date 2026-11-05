@@ -5,7 +5,7 @@ import {handleAddon} from './addon.js';
 
 const encoder = new TextEncoder();
 const API = 'https://fastshare.cz/api/api_kodi.php';
-const VERSION = '0.4.0';
+const VERSION = '0.4.1';
 const TTL = 30 * 86400;
 const hashPattern = /^[a-zA-Z0-9._~-]{8,512}$/;
 function fail(code) {

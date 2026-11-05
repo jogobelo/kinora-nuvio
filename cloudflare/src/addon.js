@@ -1,6 +1,6 @@
 // HTTP addon protocol. Account records are encrypted in the owner's KV namespace.
 function addonManifest(configured) {
-  return {id:'sk.kinora.fastshare.http', version:'0.4.0', name:'Kinora FastShare',
+  return {id:'sk.kinora.fastshare.http', version:'0.4.1', name:'Kinora',
     description:'FastShare pre Nuvio a Stremio. Nastavenie účtu cez web, bez párovania s mobilom.',
     resources:[{name:'stream',types:['movie','series'],idPrefixes:['tt','tmdb:']}],
     types:['movie','series'], catalogs:[],

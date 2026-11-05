@@ -14,10 +14,11 @@ form.addEventListener('submit',async event=>{
     if(!response.ok || !data.manifest) throw new Error(data.error || 'Nepodarilo sa pripraviť doplnok.');
     document.getElementById('manifest').value=data.manifest;
     document.getElementById('install').href=data.manifest.replace(/^https:\/\//,'stremio://');
+    document.getElementById('install-nuvio').href=data.manifest.replace(/^https:\/\//,'nuvio://');
     document.getElementById('result').hidden=false;
     document.getElementById('password').value='';
     status.textContent='Účet je overený. Pridaj doplnok do aplikácie. Tento odkaz nemá ročný limit.';
-    document.getElementById('install').focus();
+    document.getElementById('install-nuvio').focus();
   } catch(error) {status.textContent=error.message || 'Spojenie zlyhalo.';}
   finally {body.password='';submit.disabled=false;}
 });
