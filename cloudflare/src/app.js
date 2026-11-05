@@ -30,7 +30,7 @@ document.getElementById('copy').addEventListener('click',async()=>{
 // Check hosting reachability before asking the user to retry account credentials.
 fetch('/connectivity').then(r=>r.json()).then(data=>{
   if(data.ready === false && data.checks?.length && data.checks.every(check=>check.status===403)) {
-    status.textContent='FastShare aktuálne odmieta požiadavky z tohto Cloudflare hostingu (HTTP 403). Prihlásenie tu teraz nebude fungovať. Ide o spojenie s hostingom, nie o potvrdenie nesprávneho hesla. Doplnok vyžaduje hosting, z ktorého FastShare prijme požiadavky.';
+    status.textContent='FastShare aktuálne odmieta požiadavky z tohto hostingu (HTTP 403). Prihlásenie tu teraz nebude fungovať. Ide o spojenie s hostingom, nie o potvrdenie nesprávneho hesla. Doplnok vyžaduje hosting, z ktorého FastShare prijme požiadavky.';
     document.getElementById('submit').disabled=true;
     document.getElementById('submit').textContent='Prihlásenie blokuje FastShare (HTTP 403)';
     document.getElementById('setup').before(status);
