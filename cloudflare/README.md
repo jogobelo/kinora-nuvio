@@ -39,3 +39,15 @@ docker run -d --restart unless-stopped --name kinora-fastshare \
 Pred verejné sprístupnenie patrí HTTPS reverzný proxy. Vypni uňho logovanie celých ciest súkromných manifestov. Kontrola pripravenosti: `/health`; dostupnosť FastShare bez účtu: `/connectivity`.
 
 Táto možnosť je pripravená a lokálne testovaná, **nie je nasadená na novom verejnom hostingu**. Dostupnosť FastShare treba overiť z konkrétneho vybraného hostingu. Založenie hostingu, prípadné platené služby a prihlásenie do nového poskytovateľa sú samostatný krok.
+
+## Netlify Free — nový vybraný hosting
+
+Repozitár je pripravený na import do Netlify cez GitHub. Root `netlify.toml` nastavuje base `cloudflare`, build `npm test`, publish `public`, functions `netlify/functions`, Node.js 22. Funkcia `kinora.mjs` obsluhuje HTTP doplnok; nejde o Edge Function bežiacu na Cloudflare.
+
+Netlify Blobs poskytuje trvalé úložisko bez pripájania plateného disku. Store `kinora-private-v1` používa silnú konzistenciu. Pri prvom volaní vyžadujúcom konfiguráciu sa šifrovací kľúč vytvorí podmienene (`onlyIfNew`), takže aj súbežné prvé požiadavky použijú rovnaký uložený kľúč. Účty sa ukladajú šifrovane bez časovej expirácie; staré párovacie relácie rešpektujú svoj pôvodný limit. Nejde o sľub, že samotná relácia alebo predplatné FastShare nikdy nevyprší — HTTP doplnok sa pri vyhľadávaní prihlasuje znova.
+
+Nepotrebuješ kopírovať KINORA_SECRET z Cloudflare. TMDB_API_KEY je voliteľná premenná; používateľ môže kľúč zadať aj na konfiguračnej stránke. Produkčné údaje sú dostupné len na hlavnej adrese `context.site.url`; deploy previews ich nečítajú.
+
+Po deployi kontroluj `/health` a `/connectivity`. Následne `/configure` a pridanie vygenerovaného manifestu do Nuvio **Doplnky**. Pred overením z konkrétneho Netlify projektu nesľubujeme úspešné spojenie s FastShare ani prehrávanie.
+
+Bezplatný plán má pevné mesačné limity. Nezapínaj platený plán ani platené doplnky. Súkromné URL ani účty nepíš do logov či GitHubu. Master key neodstraňuj: jeho strata zneplatní uložené účty. Zrušenie jedného účtu: vymaž príslušný `record/a:<token>` záznam v Blobs; nevymazávaj `installation-key`.

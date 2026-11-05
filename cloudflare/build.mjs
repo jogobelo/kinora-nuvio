@@ -12,3 +12,7 @@ source = source.replace("import {handleAddon} from './addon.js';", () => factory
 await mkdir(new URL('dist/', root), {recursive: true});
 await writeFile(new URL('dist/worker.mjs', root), source);
 console.log('Vytvoreny dist/worker.mjs');
+// Static assets may use Netlify's CDN; source code and account data never enter publish/.
+await mkdir(new URL('public/',root),{recursive:true});
+await writeFile(new URL('public/robots.txt',root),'User-agent: *\nDisallow: /\n');
+await writeFile(new URL('public/app.js',root),await readFile(new URL('src/app.js',root),'utf8'));
